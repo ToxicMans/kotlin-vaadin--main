@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.application.views.helloworld.AllInfoSearch;
-import com.example.application.views.list.ListView;
 import com.example.application.views.person.PersonView;
 import com.example.application.views.personform.PersonFormPage;
 import com.vaadin.flow.component.Component;

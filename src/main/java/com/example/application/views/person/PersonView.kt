@@ -14,6 +14,7 @@ import org.jetbrains.exposed.sql.selectAll
 
 @Route("/personList", layout = MainLayout::class)
 class PersonView : VerticalLayout() {
+
     private val grid: Grid<PersonRecord> = Grid<PersonRecord>()
     private val updateDataButton = Button(VaadinIcon.REFRESH.create()).apply {
         addClickListener { update() }
@@ -25,12 +26,6 @@ class PersonView : VerticalLayout() {
         isMargin = true
         grid.setup()
 
-//        grid.addColumn("firstName").isAutoWidth = true
-//        grid.addColumn("lastName").isAutoWidth = true
-//        grid.addColumn("email").isAutoWidth = true
-//        grid.addColumn("phone").isAutoWidth = true
-//        grid.addColumn("dateOfBirth").isAutoWidth = true
-//        grid.addColumn("occupation").isAutoWidth = true
         add(updateDataButton, grid)
         update()
     }
@@ -46,12 +41,19 @@ class PersonView : VerticalLayout() {
     companion object {
         private fun Grid<PersonRecord>.setup() {
             removeAllColumns()
-            addColumn(PersonRecord::firstName).setHeader("Имя")
-            addColumn(PersonRecord::lastName).setHeader("Фамилия")
-            addColumn(PersonRecord::email).setHeader("Email").isSortable = true
-            addColumn(PersonRecord::phone).setHeader("Телефон").isSortable = true
-            addColumn(PersonRecord::birth).setHeader("День рождения")
-            addColumn(PersonRecord::occupation).setHeader("Профессия").isSortable = true
+            addColumn(PersonRecord::firstName).setup("Имя")
+            addColumn(PersonRecord::lastName).setup("Фамилия")
+            addColumn(PersonRecord::email).setup("Email")
+            addColumn(PersonRecord::phone).setup("Телефон")
+            addColumn(PersonRecord::birth).setup("День рождения")
+            addColumn(PersonRecord::occupation).setup("Профессия")
+            addColumn(PersonRecord:: middleName).setup("Отчество")
+            addColumn(PersonRecord::abode).setup("Живет ли человек в России")
+        }
+
+        private fun <T> Grid.Column<T>.setup(name: String, isSortable: Boolean = true) {
+            setHeader(name)
+            this.isSortable = isSortable
         }
     }
 }
@@ -60,8 +62,9 @@ class PersonView : VerticalLayout() {
  * TODO
  * каждую задачку снизу коммитить и пушить
  *
- * колонки с русскими именами
- * сортировки
- * фильтрация
+ * добавить поле "отчество" и boolean в db
+ * создать кнопку edit
+ * создать кнопку удаления чтобы выскавивало окно с подтверждением
+ *
  * еще одна колонка с ФИО (инициалы)
  * */
